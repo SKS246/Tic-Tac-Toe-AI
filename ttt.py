@@ -12,6 +12,8 @@ game_board = np.zeros((3,3), int)
 
 # Make Move
 def make_move(row, column):
+    global human_turn
+    global game_board
     if human_turn:
         game_board[row][column] = 1
     else:
@@ -20,6 +22,7 @@ def make_move(row, column):
 
 # Check if Human (Player 1) has won, returns true if they have
 def check_human_state():
+    global game_board
     # Check all 3 rows
     for i in range(3):
         if game_board[i][0] == game_board[i][1] == game_board[i][2] == 1:
@@ -42,6 +45,7 @@ def check_human_state():
 
 # Check if Bot (Player 2) has won, returns true if they have
 def check_bot_state():
+    global game_board
     # Check all 3 rows
     for i in range(3):
         if game_board[i][0] == game_board[i][1] == game_board[i][2] == 2:
@@ -62,13 +66,48 @@ def check_bot_state():
         else:
             return False
 
+# Game Loop
 def Main():
+    global human_turn
+    global no_of_turns
+    global game_board
+    while True:
+        # When to end
+        if check_human_state():
+            print("Human (Player 1) Won")
+            break
+        elif check_bot_state():
+            print("Bot (Player 2) Won")
+            break
+        elif no_of_turns == 9:
+            print("Tie")
+            break
+        else:
+            if human_turn:
+                r = (int(input("Player 1 which row do you want to place your piece in: ")) - 1)
+                c = (int(input("Player 1 which column do you want to place your piece in: ")) - 1)
+                # If another piece has been played at that spot don't allow the player to play there
+                if game_board[r][c] == 1 or game_board[r][c] == 2:
+                    print("\nCan't place here. Please enter another valid spot.")
+                    print(game_board)
+                else:
+                    make_move((r), (c))
+                    print(game_board)
+                    human_turn = False
+                    no_of_turns += 1
 
-    for i in range(3):
-        make_move(2, i)
-    print(game_board)
-    if check_human_state():
-        print("Human has won")
+            else:
+                r = (int(input("Player 2 which row do you want to place your piece in: ")) - 1)
+                c = (int(input("Player 2 which column do you want to place your piece in: ")) - 1)
+                # If another piece has been played at that spot don't allow the player to play there
+                if game_board[r][c] == 1 or game_board[r][c] == 2:
+                    print("\nCan't place here. Please enter another valid spot.")
+                    print(game_board)
+                else:
+                    make_move((r), (c))
+                    print(game_board)
+                    human_turn = True
+                    no_of_turns += 1
 
 
 Main()
