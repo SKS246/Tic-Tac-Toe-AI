@@ -95,7 +95,7 @@ def Main():
                     no_of_turns += 1
 
             else:
-                ai.ai_move(game_board, no_of_turns)
+                ai.ai_move(game_board)
                 print(game_board)
                 human_turn = True
                 no_of_turns += 1
