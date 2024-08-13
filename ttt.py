@@ -14,11 +14,13 @@ game_board = np.zeros((3,3), int)
 def make_move(row, column):
     global human_turn
     global game_board
-    if human_turn:
-        game_board[row][column] = 1
+    if game_board[row][column] == 1 or game_board[row][column] == 2:
+        return ""
     else:
-        game_board[row][column] = 2
-
+        if human_turn:
+            game_board[row][column] = 1
+        else:
+            game_board[row][column] = 2
 
 # Check if Human (Player 1) has won, returns true if they have
 def check_human_state():
@@ -87,7 +89,7 @@ def Main():
                 r = (int(input("Player 1 which row do you want to place your piece in: ")) - 1)
                 c = (int(input("Player 1 which column do you want to place your piece in: ")) - 1)
                 # If another piece has been played at that spot don't allow the player to play there
-                if game_board[r][c] == 1 or game_board[r][c] == 2:
+                if make_move(r, c) == "":
                     print("\nCan't place here. Please enter another valid spot.")
                     print(game_board)
                 else:
@@ -100,7 +102,7 @@ def Main():
                 r = (int(input("Player 2 which row do you want to place your piece in: ")) - 1)
                 c = (int(input("Player 2 which column do you want to place your piece in: ")) - 1)
                 # If another piece has been played at that spot don't allow the player to play there
-                if game_board[r][c] == 1 or game_board[r][c] == 2:
+                if make_move(r, c) == "":
                     print("\nCan't place here. Please enter another valid spot.")
                     print(game_board)
                 else:
@@ -111,4 +113,3 @@ def Main():
 
 
 Main()
-
