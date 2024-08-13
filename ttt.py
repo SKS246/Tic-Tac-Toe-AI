@@ -2,7 +2,6 @@ import numpy as np
 import ai
 
 human_turn = True
-end = False
 human_won = False
 bot_won = False
 no_of_turns = 0
@@ -96,7 +95,7 @@ def Main():
                     no_of_turns += 1
 
             else:
-                ai.ai_move(game_board)
+                ai.ai_move(game_board, no_of_turns)
                 print(game_board)
                 human_turn = True
                 no_of_turns += 1
